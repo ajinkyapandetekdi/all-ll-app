@@ -268,7 +268,7 @@ function Score() {
     setOcurracy_percentage(
       <>
         {' '}
-        <font className="res_txt">{result_per_words}/100</font>
+        <font className="res_txt">{handleScore()}/100</font>
       </>
     );
     setVoiceTextHighLight(student_text_result);
@@ -357,11 +357,12 @@ function Score() {
                     <>
                       <br />
                       <br />
-                      <div className="res_txt">{numberOfPieces}/100</div>
+                      {/* <div className="res_txt">{handleScore()}/100</div> */}
                     </>
                   ) : (
                     ''
                   )}
+                 <div className="res_txt">{handleScore()}/100</div>
                   <br />
                   <br />
                   {newtextresult}

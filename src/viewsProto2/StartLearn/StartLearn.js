@@ -15,7 +15,6 @@ import { scroll_to_top } from '../../utils/Helper/JSHelper';
 
 /*chakra*/
 import AppFooter from '../../components2/AppFooter/AppFooter';
-console.log("proto2/startlearn");
 function StartLearn() {
   const navigate = useNavigate();
 
