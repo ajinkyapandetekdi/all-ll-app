@@ -356,15 +356,15 @@ function Score() {
 
               <div>
                 <center>
-                  {/* {contenttype !== 'Word' && numberOfPieces > 50 ? (
+                 {/* {contenttype !== 'Word' && numberOfPieces > 50 ? ( */}
                     <>
                       <br />
                       <br />
                       {/* <div className="res_txt">{handleScore()}/100</div> */}
                     </>
-                  ) : (
+                  {/* ) : (
                     ''
-                  )} */}
+                  )}  */}
                   <div
                     style={{
                       position: 'absolute',
