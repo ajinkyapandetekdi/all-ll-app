@@ -4,6 +4,8 @@ import ReactAudioPlayer from 'react-audio-player';
 import AudioPlayer from 'react-h5-audio-player';
 import Thumbs_up from '../../assests/Images/Thumbs_up.svg';
 import Thumbs_Down from '../../assests/Images/Thumbs_Down.svg';
+import Thumbs_up_dis from '../../assests/Images/thumb_up_disable.svg';
+import Thumbs_down_dis from '../../assests/Images/thumb_down_dis.svg';
 import AppNavbar from '../../components/AppNavbar/AppNavbar';
 import NewTopHomeNextBar from '../../components2/NewTopHomeNextBar/NewTopHomeNextBar';
 import NewBottomHomeNextBar from '../../components2/NewBottomHomeNextBar/NewBottomHomeNextBar';
@@ -117,6 +119,7 @@ function Score() {
   const [ocurracy_percentage, setOcurracy_percentage] = useState('');
   const [newtextresult, setnewtextresult] = useState('');
   const [fluencyresult, setfluencyresult] = useState('');
+  const [isFeedbackDone, setIsFeedbackDone] = useState(false);
 
   useEffect(() => {
     if (voiceText !== '') {
@@ -127,7 +130,6 @@ function Score() {
     return string.split(search).join(replace);
   }
   function handleScore() {
-
     let voiceTextNoSymbol = replaceAll(voiceText, '?', '');
     voiceTextNoSymbol = replaceAll(voiceTextNoSymbol, "'", '');
     voiceTextNoSymbol = replaceAll(voiceTextNoSymbol, '.', '');
@@ -138,12 +140,12 @@ function Score() {
     let tempVoiceText = voiceTextNoSymbol.toLowerCase().split(' ');
 
     let teacherTextNoSymbol = replaceAll(teacherText, '?', '');
-   teacherTextNoSymbol = replaceAll(teacherTextNoSymbol, "'", '');
-   teacherTextNoSymbol = replaceAll(teacherTextNoSymbol, '.', '');
-   teacherTextNoSymbol = replaceAll(teacherTextNoSymbol, '’', '');
-   teacherTextNoSymbol = replaceAll(teacherTextNoSymbol, '|', '');
-   teacherTextNoSymbol = replaceAll(teacherTextNoSymbol, ',', '');
-   teacherTextNoSymbol = replaceAll(teacherTextNoSymbol, '!', '');
+    teacherTextNoSymbol = replaceAll(teacherTextNoSymbol, "'", '');
+    teacherTextNoSymbol = replaceAll(teacherTextNoSymbol, '.', '');
+    teacherTextNoSymbol = replaceAll(teacherTextNoSymbol, '’', '');
+    teacherTextNoSymbol = replaceAll(teacherTextNoSymbol, '|', '');
+    teacherTextNoSymbol = replaceAll(teacherTextNoSymbol, ',', '');
+    teacherTextNoSymbol = replaceAll(teacherTextNoSymbol, '!', '');
     let tempVoiceTeacher = teacherTextNoSymbol.toLowerCase().split(' ');
 
     let rightWords = 0;
@@ -217,17 +219,14 @@ function Score() {
             <font className="correct_text_remove">{studentTextArray[i]}</font>
           </>
         );
-      }
-      else if(teacherTextArray.includes(studentTextArray[i])){
+      } else if (teacherTextArray.includes(studentTextArray[i])) {
         student_text_result.push(
           <>
             {' '}
-            <font className="correct_seq_wrong" >{studentTextArray[i]}</font>
-          
+            <font className="correct_seq_wrong">{studentTextArray[i]}</font>
           </>
         );
-      } 
-       else {
+      } else {
         wrong_words++;
         student_text_result.push(
           <>
@@ -329,27 +328,50 @@ function Score() {
                   resultnextlang={resultnextlang}
                   ishomeback={true}
                 />
-              <div
-                style={{
-                  position: 'absolute',
-                  right: '30%',
-                  marginTop: '10px',
-                  padding: '5px',
-                  cursor:'pointer'
-                }}
-              >
-                <img
-                  style={{ marginRight: '15px' }}
-                  onClick={() => feedback(1, teacherText)}
-                  src={Thumbs_up}
-                  alt="thumbs-up"
-                />
-                <img
-                  onClick={() => feedback(-1, teacherText)}
-                  src={Thumbs_Down}
-                  alt="thumbs-down"
-                />
-              </div>
+                <div
+                  style={{
+                    position: 'absolute',
+                    right: '30%',
+                    marginTop: '10px',
+                    padding: '5px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {isFeedbackDone === true ? (
+                  <>
+                  <img
+                    style={{ marginRight: '15px' }}
+                   
+                    src={Thumbs_up_dis}
+                    alt="thumbs-up-dis"
+                  />
+                  <img
+                   
+                    src={Thumbs_down_dis}
+                    alt="thumbs-down-dis"
+                  />
+                </> ):
+                  (<>
+                    <img
+                      style={{ marginRight: '15px' }}
+                      onClick={() => {
+                        feedback(1, teacherText);
+                        setIsFeedbackDone(true);
+                      }}
+                      src={Thumbs_up}
+                      alt="thumbs-up"
+                    />
+                    <img
+                      onClick={() => {
+                        feedback(-1, teacherText);
+                        setIsFeedbackDone(true);
+                      }}
+                      src={Thumbs_Down}
+                      alt="thumbs-down"
+                    />
+                  </>
+                )}
+                </div>
               </div>
 
               <div>

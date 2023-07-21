@@ -2,6 +2,8 @@ import React, { useState, useEffect, createRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Thumbs_up from '../../assests/Images/Thumbs_up.svg';
 import Thumbs_Down from '../../assests/Images/Thumbs_Down.svg';
+import Thumbs_up_dis from '../../assests/Images/thumb_up_disable.svg';
+import Thumbs_down_dis from '../../assests/Images/thumb_down_dis.svg';
 import content_list from '../../utils/Const/ContentJSON';
 import home from '../../assests/Images/home.png';
 import menu from '../../assests/Images/menu.png';
@@ -18,7 +20,6 @@ import {
 import { scroll_to_top } from '../../utils/Helper/JSHelper';
 import { interactCall } from '../../services/callTelemetryIntract';
 import play from '../../assests/Images/play-img.png';
-
 import pause from '../../assests/Images/pause-img.png';
 
 import next from '../../assests/Images/next.png';
@@ -30,6 +31,7 @@ import { feedback } from '../../services/telementryService';
 function Score() {
   const navigate = useNavigate();
   const [isStart, set_isStart] = useState(false);
+  const [isFeedbackDone, setIsFeedbackDone] = useState(false);
   const [numberOfPieces, set_numberOfPieces] = useState(0);
   const [flag, setFlag] = useState(true);
   const [content, set_content] = useState({});
@@ -247,17 +249,14 @@ function Score() {
             <font className="correct_text_remove">{studentTextArray[i]}</font>
           </>
         );
-      }
-      else if(teacherTextArray.includes(studentTextArray[i])){
+      } else if (teacherTextArray.includes(studentTextArray[i])) {
         student_text_result.push(
           <>
             {' '}
-            <font className="correct_seq_wrong" >{studentTextArray[i]}</font>
-          
+            <font className="correct_seq_wrong">{studentTextArray[i]}</font>
           </>
         );
-      }    
-       else {
+      } else {
         wrong_words++;
         student_text_result.push(
           <>
@@ -344,6 +343,8 @@ function Score() {
       </>
     );
   }
+
+  console.log(isFeedbackDone);
   function showScore() {
     return (
       <Animation size={15} isStart={isStart} numberOfPieces={numberOfPieces}>
@@ -368,22 +369,41 @@ function Score() {
                     style={{
                       position: 'absolute',
                       right: '30%',
-                      marginTop:'-10px',
+                      marginTop: '-10px',
                       padding: '5px',
                       cursor: 'pointer',
                     }}
                   >
-                    <img
-                      style={{ marginRight: '15px' }}
-                      onClick={() => feedback(1, teacherText)}
-                      src={Thumbs_up}
-                      alt="thumbs-up"
-                    />
-                    <img
-                      onClick={() => feedback(-1, teacherText)}
-                      src={Thumbs_Down}
-                      alt="thumbs-down"
-                    />
+                    {isFeedbackDone === true ? (
+                      <>
+                        <img
+                          style={{ marginRight: '15px' }}
+                          src={Thumbs_up_dis}
+                          alt="thumbs-up-dis"
+                        />
+                        <img src={Thumbs_down_dis} alt="thumbs-down-dis" />
+                      </>
+                    ) : (
+                      <>
+                        <img
+                          style={{ marginRight: '15px' }}
+                          onClick={() => {
+                            feedback(1, teacherText);
+                            setIsFeedbackDone(true);
+                          }}
+                          src={Thumbs_up}
+                          alt="thumbs-up"
+                        />
+                        <img
+                          onClick={() => {
+                            feedback(-1, teacherText);
+                            setIsFeedbackDone(true);
+                          }}
+                          src={Thumbs_Down}
+                          alt="thumbs-down"
+                        />
+                      </>
+                    )}
                   </div>
                   <div className="res_txt">{handleScore()}/100</div>
 

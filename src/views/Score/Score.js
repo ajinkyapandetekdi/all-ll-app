@@ -4,6 +4,8 @@ import ReactAudioPlayer from 'react-audio-player';
 import AudioPlayer from 'react-h5-audio-player';
 import Thumbs_up from '../../assests/Images/Thumbs_up.svg';
 import Thumbs_Down from '../../assests/Images/Thumbs_Down.svg';
+import Thumbs_up_dis from '../../assests/Images/thumb_up_disable.svg';
+import Thumbs_down_dis from '../../assests/Images/thumb_down_dis.svg';
 import AppNavbar from '../../components/AppNavbar/AppNavbar';
 import NewTopHomeNextBar from '../../components/NewTopHomeNextBar/NewTopHomeNextBar';
 import NewBottomHomeNextBar from '../../components/NewBottomHomeNextBar/NewBottomHomeNextBar';
@@ -119,6 +121,8 @@ function Score() {
   const [newtextresult, setnewtextresult] = useState('');
   const [fluencyresult, setfluencyresult] = useState('');
   const [percentages, setpercentages] = useState(0);
+  const [isFeedbackDone, setIsFeedbackDone] = useState(false);
+
 
   useEffect(() => {
     if (voiceText && voiceText !== '') {
@@ -226,19 +230,14 @@ function Score() {
             <font className="correct_text_remove">{studentTextArray[i]}</font>
           </>
         );
-      }
-
-      else if(teacherTextArray.includes(studentTextArray[i])){
+      } else if (teacherTextArray.includes(studentTextArray[i])) {
         student_text_result.push(
           <>
             {' '}
-            <font className="correct_seq_wrong" >{studentTextArray[i]}</font>
-          
+            <font className="correct_seq_wrong">{studentTextArray[i]}</font>
           </>
         );
-      } 
-      
-      else {
+      } else {
         wrong_words++;
         student_text_result.push(
           <>
@@ -311,32 +310,55 @@ function Score() {
           <div className="col s12 m8 l6 main_layout">
             {/*<AppNavbar navtitle="Result" />*/}
             <br />
-              <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex' }}>
               <NewTopHomeNextBar
-                  nextlink={resultnext}
-                  resultnextlang={resultnextlang}
-                  ishomeback={true}
-                />
+                nextlink={resultnext}
+                resultnextlang={resultnextlang}
+                ishomeback={true}
+              />
               <div
                 style={{
                   position: 'absolute',
                   right: '30%',
                   marginTop: '10px',
                   padding: '5px',
-                  cursor:'pointer'
+                  cursor: 'pointer',
                 }}
               >
-                <img
-                  style={{ marginRight: '15px' }}
-                  onClick={() => feedback(1, teacherText)}
-                  src={Thumbs_up}
-                  alt="thumbs-up"
-                />
-                <img
-                  onClick={() => feedback(-1, teacherText)}
-                  src={Thumbs_Down}
-                  alt="thumbs-down"
-                />
+                {isFeedbackDone === true ? (
+                  <>
+                  <img
+                    style={{ marginRight: '15px' }}
+                   
+                    src={Thumbs_up_dis}
+                    alt="thumbs-up-dis"
+                  />
+                  <img
+                   
+                    src={Thumbs_down_dis}
+                    alt="thumbs-down-dis"
+                  />
+                </> ):
+                  (<>
+                    <img
+                      style={{ marginRight: '15px' }}
+                      onClick={() => {
+                        feedback(1, teacherText);
+                        setIsFeedbackDone(true);
+                      }}
+                      src={Thumbs_up}
+                      alt="thumbs-up"
+                    />
+                    <img
+                      onClick={() => {
+                        feedback(-1, teacherText);
+                        setIsFeedbackDone(true);
+                      }}
+                      src={Thumbs_Down}
+                      alt="thumbs-down"
+                    />
+                  </>
+                )}
               </div>
             </div>
 
