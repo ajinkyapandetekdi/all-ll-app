@@ -16,6 +16,7 @@ import pause from '../../../assests/Images/pause-img.png';
 import {  replaceAll } from '../../../utils/helper';
 import NewTopHomeNextBar from '../../../components/NewTopHomeNextBar/NewTopHomeNextBar';
 import { feedback } from '../../../services/telementryService';
+import { interactCall } from '../../../services/callTelemetryIntract';
 
 function Score() {
   const navigate = useNavigate();
@@ -55,11 +56,13 @@ function Score() {
   const [temp_audio, set_temp_audio] = useState(null);
   const playAudio = () => {
     set_temp_audio(new Audio(recordedAudio));
+    interactCall("playAudio", "score", "play", "DT");
   };
   const pauseAudio = () => {
     if (temp_audio !== null) {
       temp_audio.pause();
       setFlag(!false);
+      interactCall("pauseAudio", "score", "pause", "DT");
     }
   };
   const learnAudio = () => {

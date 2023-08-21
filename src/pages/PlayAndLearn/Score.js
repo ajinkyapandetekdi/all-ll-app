@@ -59,14 +59,14 @@ function Score() {
 
   const [temp_audio, set_temp_audio] = useState(null);
   const playAudio = () => {
-    interactCall('DT');
     set_temp_audio(new Audio(recordedAudio));
+    interactCall("playAudio", "score", "play", "DT");
   };
   const pauseAudio = () => {
-    interactCall('DT');
     if (temp_audio !== null) {
       temp_audio.pause();
       setFlag(!false);
+      interactCall("pauseAudio", "score", "pause", "DT");
     }
   };
   const learnAudio = () => {
@@ -84,11 +84,11 @@ function Score() {
   };
 
   const newSentence = () => {
-    interactCall('DT');
+    interactCall("newSentence", "score", "resume", "DT");
     navigate(-1);
   };
   const trySameSentence = () => {
-    interactCall('DT');
+    interactCall("trySameSentence", "score", "resume", "DT");
     localStorage.setItem('trysame', 'yes');
     navigate(-1);
   };

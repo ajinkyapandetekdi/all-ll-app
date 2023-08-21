@@ -36,15 +36,12 @@ function App() {
 
     setFp();
     const initService = () => {
-
-
       if (localStorage.getItem('fpDetails_v2') !== null) {
         let fpDetails_v2 = localStorage.getItem('fpDetails_v2');
         var did = fpDetails_v2.result;
       } else {
         var did = localStorage.getItem('did');
       }
-
       initialize({
         context: {
           mode: process.env.REACT_APP_MODE, // To identify preview used by the user to play/edit/preview
@@ -76,7 +73,6 @@ function App() {
     };
     initService();
     if (!ranonce) {
-
       if (localStorage.getItem('contentSessionId') === null) {
         startEvent();
       }
