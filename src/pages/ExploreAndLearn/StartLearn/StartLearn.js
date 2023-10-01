@@ -165,7 +165,6 @@ function StartLearn() {
         localStorage.setItem('trysame', 'no');
         localStorage.setItem('content_random_id', getitem);
         set_content(tempContent[getitem].content);
-        console.log(tempContent);
         set_content_id(getitem);
         localStorage.setItem(
           'contentText',
@@ -275,7 +274,7 @@ function StartLearn() {
   // localStorage.getItem('allAppContentSessionId')
   function saveIndb(output) {
     const utcDate = new Date().toISOString().split('T')[0];
-    axios.post(`https://telemetry-dev.theall.ai/learner/scores`, {
+    axios.post(`${process.env.REACT_APP_host}/learner/scores`, {
       taskType: 'asr',
       output: output,
       config: null,
@@ -449,7 +448,6 @@ function StartLearn() {
   };
   function showStartLearn() {
     const myCurrectLanguage = getParameter('language', location.search);
-    console.log(content);
     return (
       <>
         {content != null && content[sel_lang] ? (

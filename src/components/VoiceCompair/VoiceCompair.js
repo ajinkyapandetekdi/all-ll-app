@@ -61,7 +61,7 @@ const VoiceCompair = props => {
     set_asr_language_code(HINDI_ASR_LANGUAGE_CODE);
     break;
 	default:
-		set_asr_language_code(HINDI_ASR_LANGUAGE_CODE);
+		set_asr_language_code(DEFAULT_ASR_LANGUAGE_CODE);
 		break;
 	}
   }, []);
@@ -103,6 +103,7 @@ const VoiceCompair = props => {
   useEffect(() => {
     props.setVoiceText(ai4bharat);
     props.setRecordedAudio(recordedAudio);
+    localStorage.setItem('recordedAudio', recordedAudio);
   }, [ai4bharat]);
 
   //call api
@@ -135,9 +136,13 @@ const VoiceCompair = props => {
         },
       ],
     });
-    if(props.hasOwnProperty("setStoryBase64Data")){
-      props?.setStoryBase64Data(base64Data)
-    }
+
+    // console.log();
+
+    // if (sourceLanguage === 'ta' || sourceLanguage === 'hi') {
+    //   console.log("sourceLanguage:-", sourceLanguage === 'ta' || sourceLanguage === 'hi', sourceLanguage === "ta" || sourceLanguage === "hi");
+    //   payload.config.bestTokenCount = 2;
+    // }
     
     const abortController = new AbortController();
     var requestOptions = {

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Link, json, useNavigate } from 'react-router-dom';
 import './result.css';
-import startIMg from '../assests/Images/hackthon-images/Star.svg';
-import Modal from './Modal';
+import startIMg from '../../assests/Images/Star.svg';
+import Modal from '../../components/Modal/Modal';
 import axios from 'axios';
-import Header from './Header';
+import Header from '../../components/Header';
 
 
 export default function Results() {
@@ -29,7 +28,7 @@ export default function Results() {
 
   useEffect(() => {
     fetch(
-      `https://telemetry-dev.theall.ai/learner/scores/GetGaps/session/${localStorage.getItem(
+      `${process.env.REACT_APP_host}/learner/scores/GetGaps/session/${localStorage.getItem(
         'virtualStorySessionID'
       )}`
     )
@@ -43,12 +42,8 @@ export default function Results() {
     GetRecommendedWordsAPI();
   }, []);
   const GetRecommendedWordsAPI = () => {
-    // const currentSentence = localStorage.getItem('contentText');
-    // const splitSentence = currentSentence.split('');
-    // console.log(splitSentence.length);
-
     fetch(
-      `https://telemetry-dev.theall.ai/learner/scores/GetRecommendedWords/session/${localStorage.getItem(
+      `${process.env.REACT_APP_host}/learner/scores/GetRecommendedWords/session/${localStorage.getItem(
         'virtualStorySessionID'
       )}`
     )
@@ -56,14 +51,11 @@ export default function Results() {
         return res.json();
       })
       .then(data => {
-        // console.log(data);
         setStars(data.length);
       });
   };
 
-  // console.log(getGap);
   const charactersArray = getGap?.map(item => item.character);
-  // console.log(getGap);
 
   useEffect(()=>{
     if (charactersArray?.length>0 && isCalled === 0){
@@ -73,10 +65,9 @@ export default function Results() {
   },[charactersArray])
 
   const handleWordSentence = () => {
-    // const replaceSymbols = charactersArray.
     axios
       .post(
-        'https://telemetry-dev.theall.ai/content-service/v1/WordSentence/search',
+        `${process.env.REACT_APP_host}/content-service/v1/WordSentence/search`,
         {
           tokenArr: charactersArray,
         }
@@ -99,20 +90,13 @@ export default function Results() {
            contentdata[index] = contentObj;
           });
           
-          
           localStorage.setItem('apphomelevel','Word');
           localStorage.setItem('contents', JSON.stringify(contentdata));
-          
-        // let data = null;
-        // data = JSON.parse(JSON.stringify(contentdata));
-        // console.log(data);
-        // console.log(res.data.data);
       })
       .catch(error => {
         console.error(error);
       });
   };
-  // console.log(wordSentence)
   const characterImprove = () => {
     const charactersToImprove = getGap
       ?.filter((item) => item.score < 0.9)
@@ -125,26 +109,44 @@ export default function Results() {
     });
     return uniqueChars?.join(',');
   };
+    
+  const [startCount, setStartCount] = useState(0); // Initialize with 0
+  const targetCount = stars; // The target visitor count
+  
+  useEffect(() => {
+    const incrementVisitorCount = () => {
+      if (startCount < targetCount) {
+        setStartCount((prevCount) => prevCount + 1);
+      }
+    };
+  
+    // Set up an interval to increment the count every 1 second (adjust as needed)
+    const intervalId = setInterval(incrementVisitorCount, 30);
+  
+    return () => {
+      // Clean up the interval when the component unmounts
+      clearInterval(intervalId);
+    };
+  }, [startCount, targetCount]);
 
   return (
     <>
     <Header/>
       <div className="main-bg">
-        <section class="c-section">
-          <div class="container1">
-            <div class="row">
+        <section className="c-section">
+          <div className="container1">
+            <div className="row">
               <div className='col s8'>
-              {/* <Link to={'/storylist'}>
-  <button className='btn btn-info'>
-
-  Practice another Story
-  </button>
-</Link> */}
-                <div class="bg-image">
-                  <div class="content">
+              <Link to={'/storylist'}>
+               <button className='btn btn-info'>
+                   Practice another Story
+              </button>
+              </Link>
+                <div className="bg-image">
+                  <div className="content">
                     <h1>Congratulations...</h1>
                     <br />
-                    <h4>Coins earned : {stars} <img src={startIMg} /> </h4>
+                    <h4>Coins earned : {startCount} <img src={startIMg} alt='starsImg'/> </h4>
                     <br />
                     <button className='btn btn-success' onClick={openModal}>Share With Teachers</button>
                     <br />
@@ -159,7 +161,7 @@ export default function Results() {
               </div>
             </div>
 
-            <div class="row">
+            <div className="row">
               <div className='col s6'>
 
                 <Modal isOpen={isModalOpen} onClose={closeModal}>

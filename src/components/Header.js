@@ -13,16 +13,11 @@ import {
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import Children from '../assests/Images/children-thumbnail.png'
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
 
-// interface Props {
-//   children: React.ReactNode
-// }
 
 const Links = ['Dashboard', 'Projects', 'Team']
 
 const NavLink = () => {
-  //const { children } = props
   return (
     <Box
       as="a"

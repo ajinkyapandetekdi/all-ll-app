@@ -121,7 +121,9 @@ function Score() {
 
   useEffect(() => {
     fetch(
-      `https://telemetry-dev.theall.ai/learner/scores/GetGaps/user/55473503971256`
+      `${process.env.REACT_APP_host}/learner/scores/GetGaps/user/${localStorage.getItem(
+        'virtualStorySessionID'
+      )}`
     )
       .then(response => response.text())
       .then(async result => {
@@ -129,9 +131,7 @@ function Score() {
         setGetGap(apiResponse);
       });
   }, []);
-  // console.log(getGap);
   function handleScore() {
-    // saveIndb()
     let voiceTextNoSymbol = replaceAll(voiceText, '?', '');
     voiceTextNoSymbol = replaceAll(voiceTextNoSymbol, "'", '');
     voiceTextNoSymbol = replaceAll(voiceTextNoSymbol, '.', '');

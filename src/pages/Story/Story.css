@@ -1,9 +1,9 @@
-/* Story.css */
 .story-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  box-shadow: '0px 4px 6px rgba(0, 0, 0, 0.1)'
 }
 
 .story-item {
@@ -16,6 +16,9 @@
   background-color: #f9f9f9;
   border: 3px solid black;
   width: 80%;
+  box-shadow: '2px 2px 15px 5px grey';
+  border: '2px solid white';
+  border-radius: '30px';
 }
 
 .story {
@@ -25,7 +28,6 @@
 .highlighted-story {
   font-size: 18px;
   background-color: #ffd700;
-  /* Yellow background for highlighted story */
 }
 
 .next-btn-visible {
@@ -39,7 +41,6 @@
   display: none;
 }
 
-/* Story.css */
 .story-container {
   display: flex;
   flex-direction: column;
@@ -74,7 +75,6 @@ display: flex;
 .highlighted-story {
   font-size: 18px;
   background-color: #ffd700;
-  /* Yellow background for highlighted story */
 }
 .next-btn-visible {
   background-color: greenyellow;
@@ -84,7 +84,15 @@ display: flex;
   display: none;
 }
 
-/* Add this CSS in your component or a separate CSS file */
+.mic-container{
+    display: 'flex';
+    gap: '20px';
+    position: 'relative';
+    bottom: '-220px';
+    left: '-40%';
+}
+
+
 .button-container {
   text-align: center;
   margin-top: 20px;
@@ -92,8 +100,8 @@ display: flex;
 
 .custom-button {
   padding: 10px 20px;
-  background-color: #007BFF; /* Button background color */
-  color: #fff; /* Button text color */
+  background-color: #007BFF; 
+  color: #fff; 
   border: none;
   cursor: pointer;
   margin: 5px;
@@ -103,7 +111,7 @@ display: flex;
 }
 
 .custom-button:hover {
-  background-color: #0056b3; /* Hover background color */
+  background-color: #0056b3; 
 }
 .css-1jc7f17 {	
   -webkit-justify-content: center;	
